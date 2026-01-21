@@ -7,6 +7,7 @@ pipeline {
     stages {
         stage(checkout) {
             steps {
+                git branch: 'main',
                 git 'https://github.com/Sohailsaifi-aws/flask-jenkins-ci-cd.git'
             }
         }
