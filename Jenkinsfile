@@ -2,13 +2,15 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "flask-jenkins-app"        
+        IMAGE_NAME = "flask-jenkins-app"
     }
+
     stages {
-        stage(checkout) {
+
+        stage('Checkout') {
             steps {
                 git branch: 'main',
-                git 'https://github.com/Sohailsaifi-aws/flask-jenkins-ci-cd.git'
+                    url: 'https://github.com/Sohailsaifi-aws/flask-jenkins-ci-cd.git'
             }
         }
 
@@ -21,7 +23,7 @@ pipeline {
         stage('Run Unit Test') {
             steps {
                 sh '''
-                docker run --rm $IMAGE-NAME pytest
+                docker run --rm $IMAGE_NAME pytest
                 '''
             }
         }
@@ -35,13 +37,14 @@ pipeline {
                 '''
             }
         }
-}
-post {
-    success {
-        echo "FLASK CI/CD PIPELINE SUCCESSFUL"
     }
-    failure {
-        echo "PIPELINE FAILED"
+
+    post {
+        success {
+            echo "FLASK CI/CD PIPELINE SUCCESSFUL"
+        }
+        failure {
+            echo "PIPELINE FAILED"
+        }
     }
-}
 }
